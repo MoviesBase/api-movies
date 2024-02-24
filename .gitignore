@@ -2,9 +2,10 @@
 __pycache__/
 *.py[cod]
 *$py.class
-
+.idea
 # C extensions
 *.so
+certs
 
 # Distribution / packaging
 .Python
@@ -121,6 +122,7 @@ celerybeat.pid
 
 # Environments
 .env
+.env.movies_api
 .venv
 env/
 venv/
