@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
-from .models import MoviesModel, UserModel
+from .models import MoviesModel
 
 # flake8: noqa: E501
 
@@ -55,4 +55,3 @@ class UserAdmin(BaseUserAdmin):
 
 
 admin.site.register(MoviesModel, MoviesAdmin)
-admin.site.register(UserModel, UserAdmin)
