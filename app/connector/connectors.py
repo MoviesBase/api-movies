@@ -51,7 +51,6 @@ class OMDBConnector:
                     },
                 )
                 data = response.json()
-                print('laalala')
                 if data.get('Response') == 'True':
                     movies = data.get('Search', [])
                     movies_from_omdb.extend(movies)

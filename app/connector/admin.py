@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
-from .models import MoviesModel
+from connector.models import MoviesModel
 
 # flake8: noqa: E501
 

@@ -18,6 +18,7 @@ from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+PROJECT_PATH = os.path.abspath(os.path.dirname(__name__))
 
 TEST = 'test' in sys.argv
 
@@ -25,7 +26,9 @@ TEST = 'test' in sys.argv
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-3*%^pq&k300ga%)v%_7(z_yl#&393j0vsx1un!yppb_n3o9*by"
+SECRET_KEY = (
+    'django-insecure-3*%^pq&k300ga%)v%_7(z_yl#&393j0vsx1un!yppb_n3o9*by'
+)
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -97,7 +100,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "uservice.wsgi.application"
+WSGI_APPLICATION = 'uservice.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
