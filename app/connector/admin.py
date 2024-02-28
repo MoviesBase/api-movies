@@ -7,7 +7,7 @@ from connector.models import MoviesModel
 
 
 class MoviesAdmin(admin.ModelAdmin):
-    list_display = ('title', 'released', 'genre')
+    list_display = ('id', 'title', 'released', 'genre')
 
 
 class UserAdmin(BaseUserAdmin):

@@ -20,7 +20,9 @@ class MoviesOperations:
         movie_data: Movie title
         """
         try:
-            movies_from_ombd = OMDBConnector().get_movie_by_title(movie_title)
+            movies_from_ombd = OMDBConnector().get_movie_by_title(
+                movie_title.get('title')
+            )
             serializer = self.serializer_class(
                 data=movies_from_ombd, context=context, many=True
             )
@@ -44,7 +46,7 @@ class MoviesOperations:
         """
         try:
             serializer = self.serializer_class(
-                movie_instance, data=movie_data, context=context
+                movie_instance, data=movie_data, context=context, partial=True
             )
             serializer.is_valid(raise_exception=True)
             serializer.save()

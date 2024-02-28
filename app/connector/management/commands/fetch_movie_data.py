@@ -9,7 +9,7 @@ class Command(BaseCommand):
     def handle(self, *args, **kwargs):
         if not MoviesModel.objects.exists():
             movies_to_fetch = OMDBConnector().get_multiple_movies_by_title(
-                pages=1, movie_title='horror'
+                pages=10, movie_title='horror'
             )
 
             # Save movies to the database

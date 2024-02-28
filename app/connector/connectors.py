@@ -3,7 +3,7 @@ import logging
 import requests
 from django.conf import settings
 from django.core.exceptions import ValidationError
-from rest_framework.exceptions import APIException
+from rest_framework.exceptions import APIException, NotFound
 
 logger = logging.getLogger(__name__)
 
@@ -19,18 +19,14 @@ class OMDBConnector:
                 self.url,
                 params={
                     'apikey': self.api_key,
-                    'type': movie_title,
-                    'r': 'json',
-                    'page': 1,
+                    't': movie_title,
                 },
             )
             data = response.json()
-            if data.get('Response') == 'True':
-                movies = data.get('Search', [])
-
-                return movies
+            if data.get('Response') is True:
+                return [data]
             else:
-                logger.exception('No movies found from OMDB API')
+                raise NotFound('Movie not found!')
         except ValidationError as e:
             raise ValidationError(e)
         except APIException as e:

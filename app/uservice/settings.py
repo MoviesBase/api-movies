@@ -9,12 +9,14 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
+import datetime
+import os
+import sys
+from datetime import timedelta
+from pathlib import Path
 
 # flake8: noqa: E501
 
-import os
-import sys
-from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -46,6 +48,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework_jwt',
     'connector',
     'health_check',
     'drf_spectacular',
@@ -70,17 +73,9 @@ REST_FRAMEWORK = {
     'TEST_REQUEST_DEFAULT_FORMAT': 'json',
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework_simplejwt.authentication.JWTStatelessUserAuthentication',
     ],
 }
-
-# Authentication Backends
-AUTHENTICATION_BACKENDS = [
-    'django.contrib.auth.backends.ModelBackend',
-]
-
-# Django REST Framework settings
-REST_USE_JWT = True  # Use JWT for authentication
 
 ROOT_URLCONF = 'uservice.urls'
 
@@ -154,6 +149,23 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# # JWT Authentication
+# JWT_SECRET_KEY = os.environ.get('JWT_SECRET_KEY'),
+# JWT_PUBLIC_KEY = os.environ.get('JWT_PUBLIC_KEY')
+
+# JWT Authentication
+# JWT_SECRET_KEY = os.environ.get('JWT_SECRET_KEY')
+# JWT_PUBLIC_KEY = os.environ.get('JWT_PUBLIC_KEY')
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': datetime.timedelta(days=15),
+    'REFRESH_TOKEN_LIFETIME': datetime.timedelta(days=15),
+    'ALGORITHM': 'HS512',
+    'SIGNING_KEY': os.environ.get('JWT_SECRET_KEY'),
+    # Other JWT settings...
+}
+# Django REST Framework settings
+REST_USE_JWT = True  # Use JWT for authentication
 
 # API KEYS
 OMDB_API_KEY = os.environ.get('OMDB_API_KEY')

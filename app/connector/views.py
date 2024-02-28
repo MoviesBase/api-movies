@@ -1,8 +1,10 @@
 from drf_spectacular.utils import OpenApiResponse, extend_schema
 from rest_framework import permissions, status, viewsets
-from rest_framework.authentication import TokenAuthentication
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
+from rest_framework_simplejwt.authentication import (
+    JWTStatelessUserAuthentication,
+)
 
 from connector.operations import MoviesOperations
 from connector.serializers import (
@@ -18,7 +20,7 @@ class MoviesView(viewsets.ViewSet):
     Movies operations
     """
 
-    authentication_classes = (TokenAuthentication,)
+    authentication_classes = (JWTStatelessUserAuthentication,)
     permission_classes = (permissions.IsAuthenticated,)
 
     serializer_class = MoviesSerializer
@@ -48,7 +50,7 @@ class MoviesView(viewsets.ViewSet):
         """
         Receives movies data for processing
         """
-        serializer = self.serializer_class_request(request.data)
+        serializer = self.serializer_class_request(data=request.data)
         serializer.is_valid(raise_exception=True)
 
         MoviesOperations().create_movie_record(
@@ -78,12 +80,10 @@ class MoviesView(viewsets.ViewSet):
         },
         request=serializer_class,
     )
-    def update(self, request):
+    def partial_update(self, request, movie_id):
         """
         Receives Movie data for processing
         """
-        movie_id = request.data.get('id')
-
         movie_instance = MoviesOperations().get_movie_instance(movie_id)
 
         MoviesOperations().update_movie_record(
@@ -163,7 +163,7 @@ class MoviesView(viewsets.ViewSet):
 
         # Get the limit from query parameters, if provided
         # default=10
-        page_size = request.query_params.get('limit', 10)
+        page_size = int(request.query_params.get('limit', 10))
 
         paginator.page_size = page_size
 
