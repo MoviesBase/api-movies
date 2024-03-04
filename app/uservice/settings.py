@@ -191,6 +191,14 @@ if TEST:
 
     from connector.utils.test_mocker import mock_redlock
 
+    # JWT Authentication
+    SIMPLE_JWT = {
+        'ACCESS_TOKEN_LIFETIME': datetime.timedelta(days=15),
+        'REFRESH_TOKEN_LIFETIME': datetime.timedelta(days=15),
+        'ALGORITHM': 'HS512',
+        'SIGNING_KEY': 'secret',
+        # Other JWT settings...
+    }
     OMDB_API_KEY = 'test'
     patch('connector.utils.tools.get_redis_client', mock_redlock).start()
 

@@ -123,9 +123,6 @@ class MoviesView(viewsets.ViewSet):
         """
         movie_instance = MoviesOperations().get_movie_instance(movie_id)
 
-        # Check if the authenticated user
-        # has permission to retrieve this Movie data
-        self.check_object_permissions(request, movie_instance)
         serializer = self.serializer_class(movie_instance)
 
         return Response(serializer.data, status=status.HTTP_200_OK)
