@@ -23,7 +23,7 @@ class OMDBConnector:
                 },
             )
             data = response.json()
-            if data.get('Response') is True:
+            if data:
                 return [data]
             else:
                 raise NotFound('Movie not found!')
